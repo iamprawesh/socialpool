@@ -1,0 +1,3 @@
+export const ADVICE_TOGGLE = 'ADVICE_TOGGLE';
+export const FETCH_ADVICE = 'FETCH_ADVICE';
+export const FETCH_ADVICE_ERROR = 'FETCH_ADVICE_ERROR';
