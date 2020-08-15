@@ -22,6 +22,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import Loading from '../../components/Loading';
 import TaskItem from '../../components/TaskItem';
 import {Button, Overlay} from 'react-native-elements';
+import NeedInternet from '../../components/NeedInternet';
 
 const HomeScreen = ({
   getTaskNow,
@@ -37,8 +38,8 @@ const HomeScreen = ({
   const auth = useSelector((state) => state.auth);
   NetInfo.fetch().then((state) => {
     setNewtwork(`${state.isConnected}`);
-    // console.log('Is connected?', state);
   });
+
   React.useEffect(() => {
     if (network) {
       getTaskNow();
@@ -50,16 +51,13 @@ const HomeScreen = ({
     }
     fetchCategoryNow();
   }, []);
+
   if (loading) {
     return <Loading />;
   }
   if (error) {
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <Text>{error}</Text>
-    </View>;
+    return <NeedInternet />;
   }
-  console.log(error);
-  console.log('error');
 
   return (
     <View

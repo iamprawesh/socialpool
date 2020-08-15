@@ -9,6 +9,7 @@ import * as Animatable from 'react-native-animatable';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import {Icon as RCEIcon} from 'react-native-elements';
+import AppIntroSlider from 'react-native-app-intro-slider';
 
 const FooterNaviagtion = () => {
   const dispatch = useDispatch();
@@ -118,7 +119,10 @@ const FooterNaviagtion = () => {
         </TouchableOpacity>
       </Col>
       <Col style={styles.colView}>
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('AboutP');
+          }}>
           <View style={styles.view}>
             <View
               style={{

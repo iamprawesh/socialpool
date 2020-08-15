@@ -12,7 +12,7 @@ const initialState = {
   loading: false,
   qcategories: [],
   questons: [],
-  error: false,
+  error: '',
   s_category: '',
 };
 
@@ -30,21 +30,17 @@ const quizReducer = (state = initialState, action) => {
       return {
         ...state,
         error: '',
-        loading: false,
         qcategories: cat,
       };
     case TOGGLE_Q_LOADING:
       return {
         ...state,
-        error: '',
         loading: !state.loading,
       };
     case SET_Q_ERROR:
       return {
         ...state,
-        loading: false,
-        error: '',
-        questons: action.payload,
+        error: action.payload,
       };
     case FETCH_Q_QUESTIONS:
       return {

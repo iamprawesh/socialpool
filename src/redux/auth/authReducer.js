@@ -23,7 +23,7 @@ const initialState = {
   pic: '',
   status: '',
   userId: '',
-  login: false,
+  login: null,
   users: [],
   tasks: [],
 };
@@ -49,7 +49,6 @@ const authReducer = (state = initialState, action) => {
         login: true,
       };
     case LOGIN_FAILED:
-      // console.log(action.payload);
       return {
         ...state,
         loading: false,
@@ -123,10 +122,7 @@ const authReducer = (state = initialState, action) => {
         tasks: action.payload,
       };
     case UPDATE_STATUS:
-      console.log(action.payload);
-      console.log(state.users);
       let newUsers = state.users.map((user) => {
-        console.log(user);
         if (user._id === state.userId) {
           user.status = action.payload;
         }

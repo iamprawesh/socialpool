@@ -3,14 +3,14 @@ const slides = [
     key: 1,
     title: 'Title 1',
     text: 'Description.\nSay something cool',
-    image: require('../../assets/images/welcome.png'),
+    image: require('../../assets/images/welcoe-r.png'),
     backgroundColor: '#59b2ab',
   },
   {
     key: 2,
     title: 'Title 2',
     text: 'Other cool stuff',
-    image: require('../../assets/images/how.png'),
+    image: require('../../assets/images/hoe-r.png'),
     backgroundColor: 'red',
   },
   {
@@ -18,13 +18,6 @@ const slides = [
     title: 'Rocket guy',
     text: "I'm already out of descriptions\n\nLorem ipsum bla bla bla",
     image: require('../../assets/images/quiz.png'),
-    backgroundColor: '#22bcb5',
-  },
-  {
-    key: 3,
-    title: 'Rocket guy',
-    text: "I'm already out of descriptions\n\nLorem ipsum bla bla bla",
-    image: image1,
     backgroundColor: '#22bcb5',
   },
 ];
@@ -44,7 +37,10 @@ class About extends React.Component {
     return (
       <View style={[styles.slide, {backgroundColor: item.backgroundColor}]}>
         <Text style={styles.title}>{item.title}</Text>
-        <Image source={item.image} style={styles.image} />
+        <View>
+          <Image source={item.image} style={styles.image} />
+        </View>
+
         <Text style={styles.text}>{item.text}</Text>
       </View>
     );
@@ -78,8 +74,9 @@ export default About;
 
 const styles = StyleSheet.create({
   image: {
-    height: 300,
-    width: 200,
+    width: null,
+    height: 250,
+    resizeMode: 'contain',
   },
   slide: {
     flex: 1,

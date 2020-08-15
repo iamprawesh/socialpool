@@ -17,13 +17,12 @@ const Drawer = createDrawerNavigator();
 
 const DrawerContent = (props) => {
   const auth = useSelector((state) => state.auth);
-  const [user, setUser] = React.useState([]);
   return (
     <View style={{flex: 1}}>
       <DrawerContentScrollView {...props}>
         <View style={styles.drawerContent}>
           <View style={styles.userInfoSection}>
-            {auth.pic ? (
+            {!auth.pic ? (
               <View
                 style={{
                   width: 100,
@@ -73,7 +72,6 @@ const DrawerContent = (props) => {
                 <Icon name="gesture-double-tap" size={size} color={color} />
               )}
               onPress={() => {
-                console.log(props);
                 props.fetchAdviceNow();
                 RootNavigation.navigate('Home', {});
               }}

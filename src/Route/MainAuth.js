@@ -21,6 +21,7 @@ import AllUsers from '../screens/Main/AllUsers';
 import UserProfile from '../screens/Main/UserProfile';
 import QuizMain from '../screens/Main/Quiz/QuizMain';
 import QuizQuestion from '../screens/Main/Quiz/QuizQuestion';
+import About from '../screens/Main/About';
 const Stack = createStackNavigator();
 const OtherStack = createStackNavigator();
 
@@ -118,6 +119,7 @@ export const HomeStackScreen = ({navigation}) => {
       <HomeStack.Screen name="Users" component={AllUsers} />
       <HomeStack.Screen name="QuizRoute" component={QuizMain} />
       <HomeStack.Screen name="QuizQuestionRoute" component={QuizQuestion} />
+      <HomeStack.Screen name="AboutP" component={About} />
     </HomeStack.Navigator>
   );
 };

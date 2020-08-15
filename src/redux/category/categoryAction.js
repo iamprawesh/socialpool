@@ -40,7 +40,6 @@ export const fetchCategoryNow = () => {
                   console.log('Saved in local async');
                 })
                 .catch((err) => {
-                  console.log(err);
                   alert('Error in saving in localphone');
                 });
             })
@@ -57,14 +56,11 @@ export const fetchCategoryNow = () => {
       .get(`${KEY.APIURL}/api/category`)
       .then((res) => {
         let data = res.data;
-        console.log('line 24');
         dispatch(getCategory(data.result));
         let str_categories = JSON.stringify(res.data);
 
         AsyncStorage.setItem('categories', str_categories)
-          .then(() => {
-            console.log('Saved in local async');
-          })
+          .then(() => {})
           .catch((err) => {
             console.log(err);
             alert('Error in saving in localphone');
@@ -86,8 +82,6 @@ export const getCategoryFromLocal = () => {
       .get('https://api.adviceslip.com/advice')
       .then((res) => {
         let data = res.data;
-        console.log('line 32 ');
-        console.log(data);
         dispatch(fetchAdvice(data.slip.advice));
       })
       .catch((err) => {

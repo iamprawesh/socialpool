@@ -1,4 +1,4 @@
-package com.socialshare;
+package ss.socialshare;
 import android.os.Bundle; // here 
 import org.devio.rn.splashscreen.SplashScreen; // here 
 

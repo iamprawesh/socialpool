@@ -13,8 +13,11 @@ const AuthControl = ({logindata, getUserInfo}) => {
       getUserInfo();
     };
     result();
-    // SplashScreen.hide();
   }, []);
+  if (logindata.login) {
+    SplashScreen.hide();
+  }
+  // console.log(logindata);
   SplashScreen.hide();
 
   return (

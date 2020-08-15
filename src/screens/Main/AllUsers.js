@@ -4,9 +4,23 @@ import {ListItem} from 'react-native-elements';
 // import LinearGradient from 'react-native-linear-gradient'; // Only if no expo
 // import TouchableScale from 'react-native-touchable-scale'; // https://github.com/kohver/react-native-touchable-scale
 import {useSelector, useDispatch} from 'react-redux';
+import {COLORS} from '../../assets/colors';
+import {NameLetter} from '../../helper/NameLetter';
 
 const AllUsers = ({navigation}) => {
+  const [randomColor, setRandomColor] = React.useState('');
   const {users} = useSelector((state) => state.auth);
+  // const random = Math.floor(Math.random() * ColorCode.length);
+
+  const ColorCode = (i) => {
+    'rgb(' +
+      Math.floor(Math.random() * 256) +
+      ',' +
+      Math.floor(Math.random() * 256) +
+      ',' +
+      Math.floor(Math.random() * 256) +
+      ')';
+  };
   const list = [
     {
       name: 'Amy Farha',
@@ -21,8 +35,17 @@ const AllUsers = ({navigation}) => {
       subtitle: 'Vice Chairman',
     },
   ];
-
-  console.log(users.length);
+  const getRandomColor = () => {
+    return setRandomColor(
+      'rgb(' +
+        Math.floor(Math.random() * 250) +
+        ',' +
+        Math.floor(Math.random() * 256) +
+        ',' +
+        Math.floor(Math.random() * 256) +
+        ')',
+    );
+  };
   return (
     <View>
       {users.map((item, i) => (
@@ -30,12 +53,11 @@ const AllUsers = ({navigation}) => {
           key={i}
           onPress={() => {
             navigation.navigate('Profile', {_id: item._id});
-            console.log('hjgjjg');
           }}
           rightTitleStyle={{fontWeight: 'bold'}}
           leftElement={
             <View>
-              <Image
+              {/* <Image
                 style={{
                   height: 70,
                   width: 70,
@@ -45,7 +67,38 @@ const AllUsers = ({navigation}) => {
                   uri:
                     'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
                 }}
-              />
+              /> */}
+              {item.pic ? (
+                <Image
+                  style={{
+                    height: 70,
+                    width: 70,
+                    borderRadius: 50,
+                  }}
+                  source={{
+                    uri: `${item.pic}`,
+                  }}
+                />
+              ) : (
+                <View
+                  style={{
+                    width: 100,
+                    height: 100,
+                    borderRadius: 50,
+                    backgroundColor: `${ColorCode(i)}`,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                  <Text
+                    style={{
+                      fontSize: 55,
+                      fontWeight: 'bold',
+                      color: COLORS.white,
+                    }}>
+                    {NameLetter(item.name)}
+                  </Text>
+                </View>
+              )}
             </View>
           }
           title={item.name}

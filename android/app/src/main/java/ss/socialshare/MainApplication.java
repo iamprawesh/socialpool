@@ -1,9 +1,10 @@
-package com.socialshare;
+package ss.socialshare;
 
 import android.app.Application;
 import android.content.Context;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
+import com.reactnativecommunity.picker.RNCPickerPackage;
 // import com.horcrux.svg.SvgPackage;
 import com.imagepicker.ImagePickerPackage;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
@@ -20,6 +21,7 @@ import com.facebook.react.ReactPackage;
 import com.facebook.soloader.SoLoader;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+import co.apptailor.googlesignin.RNGoogleSigninPackage;  // <--- import
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -38,6 +40,13 @@ public class MainApplication extends Application implements ReactApplication {
       // packages.add(new MyReactNativePackage());
       return packages;
     }
+    // @Override
+    // protected List<ReactPackage> getPackages() {
+    //   return Arrays.<ReactPackage>asList(
+    //       new MainReactPackage(),
+    //       new RNGoogleSigninPackage() // <-- this needs to be in the list
+    //   );
+    // }
 
     @Override
     protected String getJSMainModuleName() {

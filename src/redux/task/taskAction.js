@@ -64,20 +64,16 @@ export const addTaskNow = (title, description, place, category, tokenId) => {
         },
       )
       .then((res) => {
-        // console.log(res.data);
-        console.log('nkasmd');
         dispatch(addTask(res.data.result));
         dispatch(toggleLoading(false));
         RootNavigation.navigate('Home', {});
       })
       .catch((err) => {
-        console.log('error');
         if (err.response) {
           console.log(err.response.status);
         }
         dispatch(toggleLoading(false));
-        console.log(err.response.status);
-        console.log(err);
+        dispatch(setError(err));
       });
   };
 };
@@ -89,39 +85,30 @@ export const getTaskNow = (tokenId) => {
       .then((res) => {
         dispatch(fetchTask(res.data.result));
         dispatch(toggleLoading(false));
-        console.log(res.data);
         let str_tasks = JSON.stringify(res.data);
         AsyncStorage.setItem('tasks', str_tasks)
-          .then(() => {
-            console.log('Tasks Saved in local async');
-          })
+          .then(() => {})
           .catch((err) => {
             console.log(err);
-            alert('Error in saving in localphone [Tasks]');
           });
         // RootNavigation.navigate('Home', {});
       })
       .catch((err) => {
-        console.log('error');
         if (err.response) {
           console.log(err.response.status);
         }
-        // console.log(err);
         dispatch(toggleLoading(false));
-        console.log(err.response.status);
-        console.log('err.status');
-        dispatch(setError('Some Error happens'));
+        dispatch(setError(err));
+
+        // dispatch(setError('Some Error happens'));
       });
   };
 };
 export const getTaskNowFromLocal = () => {
   return (dispatch) => {
-    console.log('here');
     AsyncStorage.fetItem('tasks')
       .then((tasks) => {
         if (tasks != null) {
-          console.log('==========');
-          console.log('Fetch Tasks  from local');
           return dispatch(fetchTask(JSON.parse(tasks)));
         } else {
           dispatch(setError('No Tasks yet !'));
@@ -130,7 +117,9 @@ export const getTaskNowFromLocal = () => {
       .catch((err) => {
         console.log(err);
         dispatch(toggleLoading(false));
-        dispatch(setError('Some Error in Catch'));
+        dispatch(setError(err));
+
+        // dispatch(setError('Some Error in Catch'));
       });
   };
 };

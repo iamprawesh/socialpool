@@ -23,18 +23,15 @@ export const fetchAdviceError = (val) => {
 };
 export const fetchAdviceNow = () => {
   return (dispatch) => {
-    console.log('fetching advicenow');
     axios
       .get('https://api.adviceslip.com/advice')
       .then((res) => {
         let data = res.data;
-        console.log('line 32 ');
-        // console.log(data);
         dispatch(fetchAdvice(data.slip.advice));
       })
       .catch((err) => {
         if (err.response) {
-          console.log(err.response.status);
+          // console.log(err.response.status);
         }
         console.log(err);
         dispatch(fetchAdviceError('Internet is needed for advice  !'));

@@ -16,6 +16,8 @@ import {
 } from '../../../redux/quiz/quizAction';
 import Loading from '../../../components/Loading';
 import Axios from 'axios';
+import {Picker} from '@react-native-community/picker';
+import NeedInternet from '../../../components/NeedInternet';
 
 const QuizMain = ({navigation}) => {
   const quiz = useSelector((state) => state.quiz);
@@ -28,9 +30,7 @@ const QuizMain = ({navigation}) => {
   React.useEffect(() => {
     dispatch(fetchQuizCategoryNow());
   }, []);
-  if (quiz.loading) {
-    return <Loading />;
-  }
+
   const save = () => {
     let cat_diff = '';
     if (category) {
@@ -41,10 +41,14 @@ const QuizMain = ({navigation}) => {
     }
     let url = `https://opentdb.com/api.php?amount=${question}${cat_diff}&type=multiple`;
     dispatch(setCategoryNow(category));
-
-    dispatch(fetchQuizQuestionsNow(url));
-    navigation.navigate('QuizQuestionRoute');
+    navigation.navigate('QuizQuestionRoute', {url});
   };
+  if (quiz.loading) {
+    return <Loading />;
+  }
+  if (quiz.error) {
+    return <NeedInternet />;
+  }
   return (
     <KeyboardAwareScrollView
       style={{flex: 1, backgroundColor: COLORS.lightcolor}}>
@@ -66,6 +70,7 @@ const QuizMain = ({navigation}) => {
           <Spacer height={20} />
           <View style={styles.item}>
             <Text style={styles.text}>Select category </Text>
+
             <View
               style={{
                 borderWidth: 2,

@@ -1,3 +1,5 @@
+const Entities = require('html-entities').XmlEntities;
+
 import React from 'react';
 import {
   StyleSheet,
@@ -9,15 +11,19 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import PrimaryButton from '../../../components/Buttons/PrimaryButton';
-
 import {useDispatch, useSelector} from 'react-redux';
 import Loading from '../../../components/Loading';
 import {COLORS} from '../../../assets/colors';
 import {DEVICESIZE} from '../../../helper/DEVICESIZE';
-import {clearQuestionNow} from '../../../redux/quiz/quizAction';
+import {
+  clearQuestionNow,
+  fetchQuizQuestionsNow,
+} from '../../../redux/quiz/quizAction';
 import * as Animatable from 'react-native-animatable';
+import {Button, Overlay} from 'react-native-elements';
+import NeedInternet from '../../../components/NeedInternet';
 
-const QuizQuestion = ({navigation}) => {
+const QuizQuestion = ({navigation, route}) => {
   const quiz = useSelector((state) => state.quiz);
   const [question, setQuestion] = React.useState([]);
   const [result, setResult] = React.useState({
@@ -30,7 +36,7 @@ const QuizQuestion = ({navigation}) => {
   const dispatch = useDispatch();
   React.useEffect(() => {
     navigation.setOptions({title: quiz.s_category});
-    setQuestion([]);
+    dispatch(fetchQuizQuestionsNow(route.params.url));
   }, []);
   function shuffles(sourceArray) {
     for (var i = 0; i < sourceArray.length - 1; i++) {
@@ -42,6 +48,9 @@ const QuizQuestion = ({navigation}) => {
     return sourceArray;
   }
 
+  // if (quiz.question == undefined) {
+  //   return <NeedInternet />;
+  // }
   React.useEffect(() => {
     setQuestion([]);
     quiz.questons.map((item) => {
@@ -68,9 +77,17 @@ const QuizQuestion = ({navigation}) => {
     return unsubscribe;
   }, [navigation]);
 
+  const converttoString = (question) => {
+    const entities = new Entities();
+    return entities.decode(question);
+  };
   if (question.length == 0) {
     return <Loading />;
   }
+  if (quiz.error) {
+    return <NeedInternet />;
+  }
+
   const handleSetAnswer = (answer, qns) => {
     let r = {
       show: false,
@@ -115,11 +132,79 @@ const QuizQuestion = ({navigation}) => {
       unanswerd,
     };
     setResult(r);
+    scroll.current.scrollTo({x: 0, y: 0, animated: true});
+    // useScrollToTop(ref);
   };
+  const toggleAnswer = (correct, incorrect) => {
+    setResult({...result, show: !result.show});
+  };
+  const scroll = React.createRef();
   return (
-    <ScrollView>
+    <ScrollView ref={scroll}>
+      {question.length == 0 && <Loading />}
       <View style={{flex: 1, marginVertical: 10}}>
         {result.show && (
+          <View style={styles.quizresult}>
+            <Text style={{color: 'green', fontSize: 17}}>
+              Correct : {result.correct}
+            </Text>
+            <View
+              style={{
+                width: DEVICESIZE.width,
+                borderColor: 'green',
+              }}></View>
+            <Text style={{color: 'red', fontSize: 17}}>
+              Incorrect : {result.incorrect}
+            </Text>
+            <View
+              style={{
+                width: DEVICESIZE.width,
+                borderColor: 'red',
+                // alignItems: 'center',
+                // justifyContent: 'center',
+              }}></View>
+            <Text style={{color: 'blue', fontSize: 17}}>
+              Unanswer : {result.unanswerd}
+            </Text>
+            <View
+              style={{
+                width: DEVICESIZE.width,
+                borderColor: 'blue',
+              }}></View>
+          </View>
+        )}
+        {/* <Overlay isVisible={result.show} onBackdropPress={toggleAnswer}>
+          <View style={styles.quizresult}>
+            <Text style={{color: 'green', fontSize: 17}}>
+              Correct : {result.correct}
+            </Text>
+            <View
+              style={{
+                borderWidth: 0.7,
+                width: DEVICESIZE.width * 0.3,
+                borderColor: 'green',
+              }}></View>
+            <Text style={{color: 'red', fontSize: 17}}>
+              Incorrect : {result.incorrect}
+            </Text>
+            <View
+              style={{
+                borderWidth: 0.7,
+                width: DEVICESIZE.width * 0.3,
+                borderColor: 'red',
+              }}></View>
+            <Text style={{color: 'blue', fontSize: 17}}>
+              Unanswer : {result.unanswerd}
+            </Text>
+            <View
+              style={{
+                borderWidth: 0.7,
+                width: DEVICESIZE.width * 0.3,
+                borderColor: 'blue',
+              }}></View>
+          </View>
+        </Overlay> */}
+        {/* {result.show && (
           <View style={styles.quizresult}>
             <Text style={{color: 'green', fontSize: 14}}>
               Correct : {result.correct}
@@ -131,7 +216,7 @@ const QuizQuestion = ({navigation}) => {
               Unanswer : {result.unanswerd}
             </Text>
           </View>
-        )}
+        )} */}
         {/* <FlatList
         data={question}
           keyExtractor={(x) => x.question}
@@ -149,7 +234,10 @@ const QuizQuestion = ({navigation}) => {
                 }}>
                 <Text style={{fontSize: 17}}>{index + 1}</Text>
               </View>
-              <Text style={styles.question}>{qn.question}</Text>
+              <Text style={styles.question}>
+                {converttoString(qn.question)}
+                {/* {converttoString(qn.question)} */}
+              </Text>
             </View>
             <View style={styles.bottom}>
               <View style={styles.answer}>
@@ -176,20 +264,21 @@ const QuizQuestion = ({navigation}) => {
                             }
                           : {},
                       ]}
-                      onPress={() => handleSetAnswer(ans, qn.question)}>
-                      <Animatable.View animation="bounceIn">
+                      onPress={() => handleSetAnswer(ans, qn.question)}
+                      activeOpacity={0.8}>
+                      {/* <Animatable.View animation="bounceIn">
                         <Icon
-                          name={
-                            result.show //if result is true means submit is clicked
-                              ? qn.user_ans === ans // if user_selected ans is equals the option itself
-                                ? qn.correct_answer == ans //if above is true and correct ans is tru then
-                                  ? `check-decagram`
-                                  : // if above is true and user select wrong ans then
-                                    `close-circle`
-                                : 0
-                              : 0
-                            // 'check-decagram'
-                          }
+                          name="check-decagram"
+                          // name={
+                          //   result.show //if result is true means submit is clicked
+                          //     ? qn.user_ans === ans // if user_selected ans is equals the option itself
+                          //       ? qn.correct_answer == ans //if above is true and correct ans is tru then
+                          //         ? 'check-decagram'
+                          //         : // if above is true and user select wrong ans then
+                          //           'close-circle'
+                          //       : ''
+                          //     : ''
+                          // }
                           size={
                             result.show //if result is true means submit is clicked
                               ? qn.user_ans === ans // if user_selected ans is equals the option itself
@@ -206,7 +295,7 @@ const QuizQuestion = ({navigation}) => {
                             alignSelf: 'center',
                           }}
                         />
-                      </Animatable.View>
+                      </Animatable.View> */}
                       <Text
                         style={[
                           styles.choice,
@@ -259,9 +348,8 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   quizresult: {
-    width: DEVICESIZE.width * 0.8,
-    // backgroundColor: COLORS.grey,
-    marginLeft: DEVICESIZE.width * 0.1,
+    // position: 'absolute',
+    alignItems: 'center',
     justifyContent: 'space-around',
     marginVertical: 10,
     flexDirection: 'row',

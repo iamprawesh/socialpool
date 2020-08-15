@@ -4,12 +4,14 @@ import {Avatar, Icon as RIcon, colors} from 'react-native-elements';
 import LinearGradient from 'react-native-linear-gradient';
 import {COLORS} from '../assets/colors';
 import {NameLetter} from '../helper/NameLetter';
+// need monent
 import moment from 'moment';
 import {useSelector, useDispatch} from 'react-redux';
 import Axios from 'axios';
 import KEY from '../config/keys';
 import {fetchTask} from '../redux';
 import Icon from 'react-native-vector-icons/Ionicons';
+// import TimeAgo from 'react-native-timeago';
 
 const TaskItem = ({item}) => {
   const [color, setColor] = React.useState(false);
@@ -41,10 +43,6 @@ const TaskItem = ({item}) => {
         },
       },
     ).then((result) => {
-      console.log('=====================like====================');
-      // console.log('userlikes[0]');
-      // setUserLikes([...userlikes, auth.userId]);
-      console.log(result);
       const newdata = tasks.map((x) => {
         if (x._id == result.data._id) {
           return {...x, likes: result.data.likes};
@@ -70,9 +68,6 @@ const TaskItem = ({item}) => {
         },
       },
     ).then((result) => {
-      console.log('=====================unlike====================');
-      console.log(result);
-
       // if (userlikes.length == 1 && userlikes[0].length == 0) {
       //   setUserLikes([]);
       //   console.log(userlikes);
@@ -103,16 +98,10 @@ const TaskItem = ({item}) => {
           return x;
         }
       });
-      console.log('newdata');
-      console.log(newdata);
       dispatch(fetchTask(newdata));
     });
   };
-  console.log('============================Item=====================');
-
   console.log(item);
-
-  console.log('============================Item=====================');
   return (
     <View style={styles.item} elevation={10}>
       <TouchableOpacity
@@ -127,15 +116,27 @@ const TaskItem = ({item}) => {
           style={styles.linearGradient}>
           <View style={styles.top}>
             <View>
-              <Avatar
-                rounded
-                // title={`${NameLetter(item.createdBy.name)}`}
-                size="large"
-                source={{
-                  uri:
-                    'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-                }}
-              />
+              {item.pic ? (
+                <Image
+                  style={{
+                    height: 70,
+                    width: 70,
+                    borderRadius: 50,
+                  }}
+                  source={{
+                    uri: `${item.pic}`,
+                  }}
+                />
+              ) : (
+                <Avatar
+                  rounded
+                  title={`${NameLetter(item.createdBy.name)}`}
+                  size="large"
+                  // source={{
+                  // uri: `${item.pic}`,
+                  // }}
+                />
+              )}
             </View>
             <View
               style={{
@@ -144,7 +145,9 @@ const TaskItem = ({item}) => {
                 justifyContent: 'flex-start',
               }}>
               <Text style={styles.name}>{item.createdBy.name}</Text>
-              <Text style={styles.name}>{date}</Text>
+              {/* <Text style={styles.name}>{date}</Text> */}
+              <Text style={styles.name}>{item.createdAt}</Text>
+              {/* <TimeAgo time={item.createdAt} style={{color: '#fff'}} /> */}
             </View>
             <View
               style={{

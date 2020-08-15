@@ -93,7 +93,6 @@ export const getUserInfo = () => {
     AsyncStorage.getItem('userInfo')
       .then((userData) => {
         if (userData != null) {
-          console.log(userData);
           dispatch(setUserData(JSON.parse(userData)));
         }
       })
@@ -102,7 +101,6 @@ export const getUserInfo = () => {
 };
 
 export const updateStatus = (val) => {
-  console.log(val);
   return {
     type: UPDATE_STATUS,
     payload: val,
@@ -118,13 +116,12 @@ export const loginUser = (
   email,
   password,
   name = '',
+  pic = '',
   socialauth = false,
   token = '',
 ) => {
   return (dispatch) => {
     dispatch(loginRequest(true));
-    // console.log(email, password, name, socialauth);
-    console.log('AuthAction loginUser');
     let url = `${KEY.APIURL}/api/user/login`;
     console.log(url);
     axios
@@ -132,20 +129,17 @@ export const loginUser = (
         name,
         email,
         password,
+        pic,
         socialauth,
         token,
       })
       .then((res) => {
-        console.log(res);
         let user_data = JSON.stringify(res.data);
         AsyncStorage.setItem('userInfo', user_data)
           .then((x) => {
             dispatch(loginSuccess(res.data));
           })
-          .catch((err) => {
-            console.log('err');
-            console.log(err);
-          });
+          .catch((err) => {});
       })
       .catch((error) => {
         console.log(error);
@@ -165,11 +159,8 @@ export const getallUsers = (userId) => {
     axios
       .get(url)
       .then((response) => {
-        console.log(response.data.result);
-        console.log('Ge tall users');
         dispatch(getallusers(response.data.result));
         let ownUser = response.data.result.filter((item) => item._id == userId);
-        // console.log(ownUser[);
         dispatch(updateStatus(ownUser[0].status));
       })
       .catch((err) => {
@@ -214,7 +205,6 @@ export const updatestatus = (id, status, tokenId) => {
           });
         }
         if (response.data.message) {
-          console.log('here');
           Snackbar.show({
             text: `${response.data.message}`,
             duration: 900,
@@ -254,9 +244,7 @@ export const signoutUser = () => {
     AsyncStorage.multiRemove(['userInfo', 'categories', 'tasks'])
       .then((x) => {
         AsyncStorage.getAllKeys()
-          .then((x) => {
-            // console.log(x);
-          })
+          .then((x) => {})
           .catch((err) => {
             console.log(err);
           });

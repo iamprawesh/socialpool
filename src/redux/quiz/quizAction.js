@@ -53,26 +53,27 @@ export const fetchQuizCategoryNow = () => {
       .get('https://opentdb.com/api_category.php')
       .then((response) => {
         dispatch(fetchQuizCategory(response.data.trivia_categories));
+        dispatch(toggleQuizLoading());
       })
       .catch((err) => {
-        console.log(err);
         dispatch(setErrorNow(err));
+        dispatch(toggleQuizLoading());
       });
   };
 };
 
 export const fetchQuizQuestionsNow = (url) => {
   return (dispatch) => {
-    console.log('hhh');
     dispatch(toggleQuizLoading());
     axios
       .get(url)
       .then((response) => {
         dispatch(fetchQuizQuestion(response.data.results));
+        // dispatch(toggleQuizLoading());
       })
       .catch((err) => {
-        console.log(err);
         dispatch(setErrorNow(err));
+        dispatch(toggleQuizLoading());
       });
   };
 };

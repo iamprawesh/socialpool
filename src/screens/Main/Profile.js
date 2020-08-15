@@ -9,8 +9,6 @@ import TaskItem from '../../components/TaskItem';
 
 const Profile = () => {
   const auth = useSelector((state) => state.auth);
-  console.log(auth.tasks.length);
-  console.log(auth.tasks);
   return (
     <View style={{flex: 1}}>
       <View style={styles.top}>

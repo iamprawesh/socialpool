@@ -48,7 +48,6 @@ const CreatePostScreen = () => {
   // });
   const handleSetCategory = (item) => {
     setCategory(item._id);
-    console.log(item.name);
   };
   let FirstInput = useRef(null);
 
@@ -85,16 +84,8 @@ const CreatePostScreen = () => {
     if (error.title == ' ') {
       if (error.desc == ' ') {
         if (error.place == ' ') {
-          console.log('hj');
-          // console.log(error);
-          console.log(error.title.length);
-          console.log(error.desc.length);
-          console.log(error.place.length);
-
-          console.log('if block', error.title);
           // console.log(place, title, description);
           dispatch(addTaskNow(title, description, place, category, tokenId));
-          console.log('The state for loading is ', loading);
         }
       }
     }

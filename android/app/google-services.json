@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "473624721309",
+    "firebase_url": "https://socialsharer-aa0bc.firebaseio.com",
+    "project_id": "socialsharer-aa0bc",
+    "storage_bucket": "socialsharer-aa0bc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:473624721309:android:258dc33e0fa28c21232174",
+        "android_client_info": {
+          "package_name": "ss.socialshare"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "473624721309-46p53735m44d4v6d73b67a1mpos5ud3d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ss.socialshare",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "473624721309-tkgq9ql0qnu1rkspghkjp2v1gq8cad7s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAiWH3xIUkVN42ZldvA80WdX-W3_OhAn1g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "473624721309-tkgq9ql0qnu1rkspghkjp2v1gq8cad7s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

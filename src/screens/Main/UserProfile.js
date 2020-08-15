@@ -52,9 +52,12 @@ const UserProfile = ({route, navigation}) => {
       if (item._id == route.params._id) {
         setUser(item);
         setStatus(item.status);
+        setImage(item.pic);
       }
     });
   }, []);
+  console.log(auth);
+  console.log('auth');
 
   const options = {
     title: 'Select Profile Image',
@@ -152,13 +155,11 @@ const UserProfile = ({route, navigation}) => {
     //   data: y,
     //   headers: { 'Content-Type': 'multipart/form-data' },
     // })
-    console.log(y);
     try {
       let x = await Axios.post(
         'https://api.cloudinary.com/v1_1/dxg62sdjk/image/upload',
         y,
       );
-      console.log(x);
     } catch (error) {
       console.log(error);
     }

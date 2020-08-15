@@ -9,7 +9,7 @@ import {
 const initialState = {
   loading: false,
   tasks: [],
-  error: false,
+  error: '',
 };
 
 const taskReducer = (state = initialState, action) => {
@@ -20,12 +20,9 @@ const taskReducer = (state = initialState, action) => {
         tasks: [action.payload, ...state.tasks],
       };
     case UPDATE_TASK:
-      console.log('Update');
       // console.log(action.payload.likes);
       state.tasks.map((task) => {
         if (task._id == action.payload._id) {
-          // console.log(task);
-          // console.log(task);
           return {...state, tasks: {...task, likes: [action.payload.likes]}};
         } else {
           return {...state, tasks: [task]};
