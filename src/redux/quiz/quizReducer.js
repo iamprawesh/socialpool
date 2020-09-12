@@ -6,7 +6,6 @@ import {
   SELECTED_CATEGORY,
   CLEAR_QUESTIONS,
 } from './quizTypes';
-import {concat} from 'react-native-reanimated';
 
 const initialState = {
   loading: false,

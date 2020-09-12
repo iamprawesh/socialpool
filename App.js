@@ -4,7 +4,6 @@ import store from './src/redux/store';
 import AuthControl from './src/Route/index';
 // import {DefaultTheme, Provider as PaperProvider} from 'react-native-paper';
 import {COLORS} from './src/assets/colors';
-import SQLite from 'react-native-sqlite-storage';
 
 // const theme = {
 //   ...DefaultTheme,

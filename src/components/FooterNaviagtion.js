@@ -4,7 +4,6 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import {COLORS} from '../assets/colors';
-import {Col, Row, Grid} from 'react-native-easy-grid';
 import * as Animatable from 'react-native-animatable';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
@@ -16,8 +15,8 @@ const FooterNaviagtion = () => {
   const navigation = useNavigation();
 
   return (
-    <Grid>
-      <Col style={styles.colView}>
+    <View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
+      <View style={styles.colView}>
         <TouchableOpacity onPress={() => navigation.navigate('Users')}>
           <View style={styles.view}>
             <View
@@ -36,8 +35,8 @@ const FooterNaviagtion = () => {
             <Text style={styles.text}>Users</Text>
           </View>
         </TouchableOpacity>
-      </Col>
-      <Col style={styles.colView}>
+      </View>
+      <View style={styles.colView}>
         <TouchableOpacity
           onPress={() => {
             // dispatch(fetchCategoryNow());
@@ -61,8 +60,8 @@ const FooterNaviagtion = () => {
             <Text style={styles.text}>Create</Text>
           </View>
         </TouchableOpacity>
-      </Col>
-      <Col style={styles.colView}>
+      </View>
+      <View style={styles.colView}>
         <TouchableOpacity
           activeOpacity={0.8}
           onPress={() => console.log('hello')}>
@@ -91,8 +90,8 @@ const FooterNaviagtion = () => {
             {/* <Text style={styles.text}>Hello</Text> */}
           </Animatable.View>
         </TouchableOpacity>
-      </Col>
-      <Col style={styles.colView}>
+      </View>
+      <View style={styles.colView}>
         <TouchableOpacity
           onPress={() => {
             navigation.navigate('QuizRoute');
@@ -117,8 +116,8 @@ const FooterNaviagtion = () => {
             <Text style={[styles.text, {marginLeft: 10}]}>Quiz</Text>
           </View>
         </TouchableOpacity>
-      </Col>
-      <Col style={styles.colView}>
+      </View>
+      <View style={styles.colView}>
         <TouchableOpacity
           onPress={() => {
             navigation.navigate('AboutP');
@@ -136,8 +135,8 @@ const FooterNaviagtion = () => {
             <Text style={styles.text}>About</Text>
           </View>
         </TouchableOpacity>
-      </Col>
-    </Grid>
+      </View>
+    </View>
   );
 };
 
@@ -157,7 +156,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   colView: {
-    justifyContent: 'center',
-    alignItems: 'center',
+    // justifyContent: 'center',
+    // alignItems: 'center',
   },
 });

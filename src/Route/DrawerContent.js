@@ -51,7 +51,7 @@ const DrawerContent = (props) => {
                 rounded
               />
             )}
-            <Text style={styles.title}>{auth.name}</Text>
+            <Text style={styles.title}>PP{auth.name}</Text>
             <Text style={styles.caption}>{auth.status}</Text>
           </View>
           <View

@@ -1,91 +1,133 @@
+import AppIntroSlider from 'react-native-app-intro-slider';
+import React from 'react';
+import {StyleSheet, Text, View, Image} from 'react-native';
+import {COLORS} from '../../assets/colors';
+import * as Animatable from 'react-native-animatable';
+import Icon from 'react-native-vector-icons/Ionicons';
+
 const slides = [
   {
     key: 1,
-    title: 'Title 1',
-    text: 'Description.\nSay something cool',
-    image: require('../../assets/images/welcoe-r.png'),
-    backgroundColor: '#59b2ab',
+    title: 'Welcome to Social Sharer',
+    text:
+      "Let's avoid boredom by \nupdating ourself with what our friends are enjoying !",
+    image: require('../../assets/images/fans_r.png'),
+    backgroundColor: COLORS.primarycolor,
   },
   {
     key: 2,
-    title: 'Title 2',
-    text: 'Other cool stuff',
-    image: require('../../assets/images/hoe-r.png'),
-    backgroundColor: 'red',
+    title: 'How does it Work ?',
+    text:
+      'Make a post what are you \n enjoying  so friends could do exactly  what you did',
+    image: require('../../assets/images/work-r.png'),
+    backgroundColor: COLORS.primarycolor,
   },
   {
     key: 3,
-    title: 'Rocket guy',
-    text: "I'm already out of descriptions\n\nLorem ipsum bla bla bla",
+    title: 'What else ! ',
+    text:
+      'You can even play Quiz with \n custom category with any  \n level of difficulty',
     image: require('../../assets/images/quiz.png'),
-    backgroundColor: '#22bcb5',
+    backgroundColor: COLORS.primarycolor,
   },
 ];
-import AppIntroSlider from 'react-native-app-intro-slider';
-import image1 from '../../assets/images/how.svg';
-import React from 'react';
-import {StyleSheet, Text, View, Image} from 'react-native';
 
-class About extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      showSlides: true,
-    };
-  }
-  renderSlide = ({item}) => {
+const About = ({navigation}) => {
+  const [showSlides, setshowSlides] = React.useState(true);
+  React.useEffect(() => {
+    navigation.setOptions({
+      title: '',
+      headerStyle: {
+        backgroundColor: COLORS.primarycolor,
+      },
+      headerTintColor: '#000',
+    });
+  }, []);
+  const renderSlide = ({item}) => {
     return (
       <View style={[styles.slide, {backgroundColor: item.backgroundColor}]}>
-        <Text style={styles.title}>{item.title}</Text>
+        <Image source={item.image} style={styles.image} />
         <View>
-          <Image source={item.image} style={styles.image} />
+          <Animatable.Text
+            style={styles.title}
+            animation="fadeInLeft"
+            easing="ease-out"
+            // iterationCount="infinite"
+          >
+            {item.title}
+          </Animatable.Text>
         </View>
-
         <Text style={styles.text}>{item.text}</Text>
       </View>
     );
   };
-  onDone = () => {
-    // User finished the introduction. Show real app through
-    // navigation or simply by controlling state
-    this.setState({showSlides: false});
-  };
-  render() {
-    if (!this.state.showSlides) {
-      return (
-        <View style={styles.container}>
-          <Text style={styles.text}>You are Home!!</Text>
-        </View>
-      );
-    } else {
-      return (
-        <AppIntroSlider
-          showSkipButton
-          renderItem={this.renderSlide}
-          data={slides}
-          onDone={this.onDone}
+  const _renderNextButton = () => {
+    return (
+      <View style={styles.buttonCircle}>
+        <Icon
+          name="chevron-forward-circle"
+          color="rgba(255, 255, 255, .9)"
+          size={40}
         />
-      );
-    }
+      </View>
+    );
+  };
+  const _renderDoneButton = () => {
+    return (
+      <View style={styles.buttonCircle}>
+        <Icon name="md-checkmark" color="rgba(255, 255, 255, .9)" size={40} />
+      </View>
+    );
+  };
+  const _renderSkipButton = () => {
+    return (
+      <View style={styles.buttonCircle}>
+        <Icon
+          name="md-play-forward-sharp"
+          color="rgba(255, 255, 255, .9)"
+          size={40}
+        />
+      </View>
+    );
+  };
+  const onDone = () => {
+    setshowSlides(false);
+  };
+  if (!showSlides) {
+    navigation.navigate('Home');
+    return <View></View>;
+  } else {
+    return (
+      <AppIntroSlider
+        showSkipButton
+        renderItem={renderSlide}
+        renderNextButton={_renderNextButton}
+        renderDoneButton={_renderDoneButton}
+        renderSkipButton={_renderSkipButton}
+        data={slides}
+        onDone={onDone}
+      />
+    );
   }
-}
-
+};
 export default About;
 
 const styles = StyleSheet.create({
   image: {
+    height: 300,
+    // width: 200,
     width: null,
-    height: 250,
+    // height: null,
     resizeMode: 'contain',
   },
   slide: {
     flex: 1,
   },
   buttonCircle: {
-    width: 40,
-    height: 40,
+    width: 50,
+    height: 50,
     backgroundColor: 'rgba(0, 0, 0, .2)',
-    borderRadius: 20,
+    borderRadius: 50,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -96,6 +138,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   text: {
-    fontSize: 16,
+    fontSize: 20,
+    textAlign: 'center',
+    lineHeight: 30,
+    color: COLORS.lightcolor,
+    fontFamily: 'monospace',
+  },
+  title: {
+    marginTop: 20,
+    fontSize: 30,
+    color: COLORS.white,
+    marginBottom: 10,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    // fontFamily: 'serif',
   },
 });

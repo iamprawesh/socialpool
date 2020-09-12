@@ -12,6 +12,7 @@ import KEY from '../config/keys';
 import {fetchTask} from '../redux';
 import Icon from 'react-native-vector-icons/Ionicons';
 // import TimeAgo from 'react-native-timeago';
+import * as Animatable from 'react-native-animatable';
 
 const TaskItem = ({item}) => {
   const [color, setColor] = React.useState(false);
@@ -103,7 +104,7 @@ const TaskItem = ({item}) => {
   };
   console.log(item);
   return (
-    <View style={styles.item} elevation={10}>
+    <Animatable.View animation="flipInX" style={styles.item} elevation={10}>
       <TouchableOpacity
         activeOpacity={1}
         onPress={() => {
@@ -186,7 +187,7 @@ const TaskItem = ({item}) => {
         <Text style={styles.text}>A bit More : {item.description} </Text>
         <Text style={styles.text}>Found in : {item.place}</Text>
       </View>
-    </View>
+    </Animatable.View>
   );
 };
 
