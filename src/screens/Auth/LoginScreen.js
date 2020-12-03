@@ -321,12 +321,10 @@ const styles = StyleSheet.create({
   },
   action: {
     width: DEVICESIZE.width * 0.7,
-    flexDirection: 'row',
     marginTop: 10,
     borderBottomWidth: 1,
     borderBottomColor: COLORS.primarycolor,
     paddingBottom: 5,
-    alignItems: 'center',
   },
   textInput: {
     flex: 1,

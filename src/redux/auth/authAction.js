@@ -69,6 +69,7 @@ export const signout = () => {
     type: SIGN_OUT,
   };
 };
+
 export const setUserData = (data) => {
   return {
     type: SET_USER_INFO,
@@ -134,7 +135,7 @@ export const loginUser = (
         token,
       })
       .then((res) => {
-        let user_data = JSON.stringify(res.data);
+        let user_data = JSON.stringify(res.data);F
         AsyncStorage.setItem('userInfo', user_data)
           .then((x) => {
             dispatch(loginSuccess(res.data));

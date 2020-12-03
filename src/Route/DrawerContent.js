@@ -73,7 +73,7 @@ const DrawerContent = (props) => {
               )}
               onPress={() => {
                 props.fetchAdviceNow();
-                RootNavigation.navigate('Home', {});
+                // RootNavigation.navigate('Home', {});
               }}
             />
             {/* </Drawer.Section> */}
