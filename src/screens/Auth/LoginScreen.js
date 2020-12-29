@@ -22,6 +22,7 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 import * as Animatable from 'react-native-animatable';
 import {loginUser, clearData} from '../../redux/auth/authAction';
 import LottieView from 'lottie-react-native';
+import {useSelector,} from 'react-redux';
 
 const LoginScreen = ({navigation, sError, loginUser, loading, clearData}) => {
   const [data, setData] = React.useState({
@@ -32,9 +33,19 @@ const LoginScreen = ({navigation, sError, loginUser, loading, clearData}) => {
     eye_password: false,
     error: '',
   });
+  const auth = useSelector((state) => state.auth);
+  // console.log(auth.error);
   React.useEffect(() => {
     const unsubscribe = navigation.addListener('blur', () => {});
     clearData();
+    setData({
+          email: '',
+    password: '',
+    check_textInputChange: false,
+    secureTextEntry: true,
+    eye_password: false,
+    error: '',
+    });
     return unsubscribe;
   }, [navigation]);
 
@@ -137,13 +148,13 @@ const LoginScreen = ({navigation, sError, loginUser, loading, clearData}) => {
               backgroundColor: COLORS.white,
               justifyContent: 'center',
               alignItems: 'center',
-              padding: 8,
-              borderRadius: 20,
+              padding: DEVICESIZE.width*.01,
+              borderRadius: 10,
             }}>
             <Image
               style={{
-                height: 50,
-                width: 50,
+                height: DEVICESIZE.height*.08,
+                width: DEVICESIZE.width*.15,
                 alignItems: 'center',
               }}
               source={require('../../assets/images/logo.png')}
@@ -153,7 +164,9 @@ const LoginScreen = ({navigation, sError, loginUser, loading, clearData}) => {
           <View style={{marginRight: '5%'}} />
           <Text
             style={{
-              fontSize: 35,
+              fontSize: DEVICESIZE.width*.07,
+              flex: 1, 
+              flexWrap: 'wrap',
               color: COLORS.lightcolor,
               fontWeight: 'bold',
               fontFamily: 'sans-serif-condensed',
@@ -185,7 +198,7 @@ const LoginScreen = ({navigation, sError, loginUser, loading, clearData}) => {
             ) : null}
           </View>
           <View style={styles.action}>
-            <FontAwesome name="lock" color="#05375a" size={23} />
+            <FontAwesome name="lock" color={COLORS.lightblack} size={23} />
             <TextInput
               placeholder="Your Password"
               secureTextEntry={data.secureTextEntry}
@@ -213,7 +226,7 @@ const LoginScreen = ({navigation, sError, loginUser, loading, clearData}) => {
                 <Text
                   style={{
                     marginTop: 5,
-                    fontSize: 15,
+                    fontSize:DEVICESIZE.width*.028,
                     color: 'red',
                     marginLeft: -50,
                     width: DEVICESIZE.width * 0.6,
@@ -225,7 +238,7 @@ const LoginScreen = ({navigation, sError, loginUser, loading, clearData}) => {
                 <Text
                   style={{
                     marginTop: 5,
-                    fontSize: 15,
+                    fontSize:DEVICESIZE.width*.028,
                     color: 'red',
                     marginLeft: -50,
                     width: DEVICESIZE.width * 0.6,
@@ -246,14 +259,18 @@ const LoginScreen = ({navigation, sError, loginUser, loading, clearData}) => {
             color={COLORS.white}
           />
           <View style={{flexDirection: 'row'}}>
-            <Text>Have an Account ? </Text>
+            <Text style={{
+                  fontSize:DEVICESIZE.width*.03
+
+            }}>Don't have an Account ? </Text>
             <TouchableOpacity onPress={() => navigation.navigate('SignupS')}>
               <Text
                 style={{
                   color: COLORS.primarycolor,
                   fontWeight: 'bold',
+                  fontSize:DEVICESIZE.width*.03
                 }}>
-                Sign in
+                Sign up
               </Text>
             </TouchableOpacity>
           </View>
@@ -320,11 +337,13 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.white,
   },
   action: {
-    width: DEVICESIZE.width * 0.7,
+    width: '80%',
+    flexDirection: 'row',
     marginTop: 10,
     borderBottomWidth: 1,
     borderBottomColor: COLORS.primarycolor,
     paddingBottom: 5,
+    alignItems: 'center',
   },
   textInput: {
     flex: 1,

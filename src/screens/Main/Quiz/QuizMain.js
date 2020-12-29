@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
   },
   textField: {
     borderWidth: 2,
-    fontSize: 20,
+    fontSize:  DEVICESIZE.width*.04,
     width: DEVICESIZE.width * 0.3,
     // alignSelf: 'center',
     borderRadius: 10,
@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   dropdown: {
-    fontSize: 16,
+    fontSize:  DEVICESIZE.width*.035,
     paddingTop: 13,
     paddingHorizontal: 10,
     paddingBottom: 12,
@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
     color: 'black',
   },
   text: {
-    fontSize: 14,
+    fontSize:  DEVICESIZE.width*.038,
     letterSpacing: 1,
     fontWeight: 'bold',
     color: COLORS.lightblack,

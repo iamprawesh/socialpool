@@ -5,7 +5,6 @@ function useFetch(url) {
     data: null,
     loading: false,
   });
-  console.log('useFetch');
   //  api call
   React.useEffect(() => {
     setState({loading: true, data: null});
@@ -17,7 +16,6 @@ function useFetch(url) {
         });
       })
       .catch((err) => {
-        console.log(err);
       });
   }, [url]);
   return {...state};

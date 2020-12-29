@@ -6,7 +6,7 @@ import {
   TextInput,
   Platform,
   Image,
-  KeyboardAvoidingView,
+  KeyboardAvoidingView
 } from 'react-native';
 import {COLORS} from '../../assets/colors';
 import MainButton from '../../components/MainButton';
@@ -18,6 +18,10 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 import * as Animatable from 'react-native-animatable';
 import {SignupUser, clearData} from '../../redux/auth/authAction';
 import {connect} from 'react-redux';
+import {DEVICESIZE} from '../../helper/DEVICESIZE';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import {useSelector, useDispatch} from 'react-redux';
+import LottieView from 'lottie-react-native';
 
 // import FontAwesome from 'react-native-vector-icons/FontAwesome5';
 const SignupScreen = ({
@@ -28,6 +32,8 @@ const SignupScreen = ({
   // signup,
   clearData,
 }) => {
+  const auth = useSelector((state) => state.auth);
+
   const [data, setData] = React.useState({
     email: '',
     password: '',
@@ -187,12 +193,11 @@ const SignupScreen = ({
       });
     }
     let {email, name, password} = data;
+    // console.log(data);
     SignupUser(name, email, password);
   };
+  //  console.log()
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
-      style={{flex: 1}}>
       <View style={{flex: 1, backgroundColor: COLORS.lightcolor}}>
         <View style={styles.header}></View>
         <View style={styles.footer}></View>
@@ -215,8 +220,8 @@ const SignupScreen = ({
             }}>
             <Image
               style={{
-                height: 50,
-                width: 50,
+                height: DEVICESIZE.height*.08,
+                width: DEVICESIZE.width*.15,
                 alignItems: 'center',
               }}
               source={require('../../assets/images/logo.png')}
@@ -226,7 +231,9 @@ const SignupScreen = ({
           <View style={{marginRight: '5%'}} />
           <Text
             style={{
-              fontSize: 35,
+              fontSize: DEVICESIZE.width*.07,
+              flex: 1, 
+              flexWrap: 'wrap',
               color: COLORS.lightcolor,
               fontWeight: 'bold',
               fontFamily: 'sans-serif-condensed',
@@ -270,7 +277,7 @@ const SignupScreen = ({
             ) : null}
           </View>
           <View style={styles.action}>
-            <FontAwesome name="lock" color="#05375a" size={23} />
+            <FontAwesome name="lock" color={COLORS.lightblack} size={23} />
             <TextInput
               placeholder="Your Password"
               secureTextEntry={data.secureTextEntry}
@@ -293,7 +300,7 @@ const SignupScreen = ({
             )}
           </View>
           <View style={styles.action}>
-            <FontAwesome name="lock" color="#05375a" size={23} />
+            <FontAwesome name="lock" color={COLORS.lightblack} size={23} />
             <TextInput
               placeholder="Conform Password"
               secureTextEntry={data.secureReTextEntry}
@@ -315,14 +322,9 @@ const SignupScreen = ({
               </Animatable.View>
             )}
           </View>
-          {loading && (
-            <View>
-              <Text>Loading</Text>
-            </View>
-          )}
           <Text
-            style={{marginTop: 5, fontSize: 15, color: 'red', marginLeft: -50}}>
-            {data.error ? data.error : sError}
+            style={{marginTop: 5, fontSize:DEVICESIZE.width*.025, color: 'red'}}>
+            {data.error ? data.error : auth.error}
           </Text>
           <MarginTen />
           <MainButton
@@ -334,20 +336,40 @@ const SignupScreen = ({
             color={COLORS.primarycolor}
           />
           <View style={{flexDirection: 'row'}}>
-            <Text>Have an Account ? </Text>
+            <Text style={{fontSize:DEVICESIZE.width*.03}}>Have an Account ? </Text>
             <TouchableOpacity onPress={() => navigation.navigate('LoginS')}>
               <Text
                 style={{
                   color: COLORS.primarycolor,
                   fontWeight: 'bold',
+                  fontSize:DEVICESIZE.width*.03
                 }}>
                 Sign in
               </Text>
             </TouchableOpacity>
           </View>
         </Animatable.View>
+         {auth.loading && (
+        <View
+          style={{
+            flex: 1,
+            position: 'absolute',
+            height: DEVICESIZE.height,
+            width: DEVICESIZE.width,
+            padding: 100,
+            backgroundColor: 'rgba(0,0,0,0.2)',
+            // backgroundColor: COLORS.lightcolor,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <LottieView
+            source={require('../../assets/lottiefiles/userloading.json')}
+            autoPlay
+          />
+        </View>
+      )}
       </View>
-    </KeyboardAvoidingView>
+    //  </KeyboardAwareScrollView>
   );
 };
 const mapStateToProps = (state) => {

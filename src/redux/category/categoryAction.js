@@ -45,7 +45,7 @@ export const fetchCategoryNow = () => {
             })
             .catch((err) => {
               if (err.response) {
-                console.log(err.response.status);
+                // console.log(err.response.status);
               }
               console.log(err);
             });
@@ -62,13 +62,13 @@ export const fetchCategoryNow = () => {
         AsyncStorage.setItem('categories', str_categories)
           .then(() => {})
           .catch((err) => {
-            console.log(err);
+            // console.log(err);
             alert('Error in saving in localphone');
           });
       })
       .catch((err) => {
         if (err.response) {
-          console.log(err.response.status);
+          // console.log(err.response.status);
         }
         console.log(err);
       });
@@ -86,7 +86,7 @@ export const getCategoryFromLocal = () => {
       })
       .catch((err) => {
         if (err.response) {
-          console.log(err.response.status);
+          // console.log(err.response.status);
         }
         console.log(err);
       });

@@ -13,6 +13,8 @@ import {fetchTask} from '../redux';
 import Icon from 'react-native-vector-icons/Ionicons';
 // import TimeAgo from 'react-native-timeago';
 import * as Animatable from 'react-native-animatable';
+import { DEVICESIZE } from '../helper/DEVICESIZE';
+import { formatDate } from '../helper/Formatdate';
 
 const TaskItem = ({item}) => {
   const [color, setColor] = React.useState(false);
@@ -51,7 +53,7 @@ const TaskItem = ({item}) => {
           return x;
         }
       });
-      console.log(newdata);
+      // console.log(newdata);
       dispatch(fetchTask(newdata));
     });
   };
@@ -102,7 +104,7 @@ const TaskItem = ({item}) => {
       dispatch(fetchTask(newdata));
     });
   };
-  console.log(item);
+  // console.log(item);
   return (
     <Animatable.View animation="flipInX" style={styles.item} elevation={10}>
       <TouchableOpacity
@@ -120,8 +122,8 @@ const TaskItem = ({item}) => {
               {item.pic ? (
                 <Image
                   style={{
-                    height: 70,
-                    width: 70,
+                    height: DEVICESIZE.width*.03,
+                    width: DEVICESIZE.width*.03,
                     borderRadius: 50,
                   }}
                   source={{
@@ -129,14 +131,11 @@ const TaskItem = ({item}) => {
                   }}
                 />
               ) : (
-                <Avatar
-                  rounded
-                  title={`${NameLetter(item.createdBy.name)}`}
-                  size="large"
-                  // source={{
-                  // uri: `${item.pic}`,
-                  // }}
-                />
+                <View style={{padding:DEVICESIZE.width*.05,backgroundColor:COLORS.grey,borderRadius:DEVICESIZE.width*.1,
+                marginLeft:DEVICESIZE.width*.01
+                }}>
+                        <Text style={{fontSize:DEVICESIZE.width*.06}}>{NameLetter(item.createdBy.name)}</Text>
+                  </View>
               )}
             </View>
             <View
@@ -144,10 +143,11 @@ const TaskItem = ({item}) => {
                 alignSelf: 'center',
                 flexDirection: 'column',
                 justifyContent: 'flex-start',
+                marginLeft:DEVICESIZE.width*.04
               }}>
               <Text style={styles.name}>{item.createdBy.name}</Text>
               {/* <Text style={styles.name}>{date}</Text> */}
-              <Text style={styles.name}>{item.createdAt}</Text>
+              <Text style={styles.name}>{formatDate(item.createdAt)}</Text>
               {/* <TimeAgo time={item.createdAt} style={{color: '#fff'}} /> */}
             </View>
             <View
@@ -156,25 +156,25 @@ const TaskItem = ({item}) => {
                 flexDirection: 'column',
                 justifyContent: 'center',
                 alignItems: 'center',
-                marginTop: -10,
+                marginRight:DEVICESIZE.width*.01
               }}>
               {item.likes.includes(auth.userId) ? (
                 <Icon
                   onPress={() => unlikeTask()}
                   name="heart"
                   color="white"
-                  size={37}
+                  size={DEVICESIZE.width*.09}
                 />
               ) : (
                 <Icon
                   onPress={() => likeTask()}
                   name="heart-outline"
                   color="white"
-                  size={37}
+                  size={DEVICESIZE.width*.09}
                 />
               )}
               <Text
-                style={{color: COLORS.white, fontSize: 20, fontWeight: '800'}}>
+                style={{color: COLORS.white, fontSize: DEVICESIZE.width*.05, fontWeight: '800'}}>
                 {item.likes.length}
               </Text>
             </View>
@@ -196,34 +196,34 @@ export default TaskItem;
 const styles = StyleSheet.create({
   item: {
     // height: 200,
-    marginHorizontal: 10,
-    borderRadius: 40,
+    marginHorizontal: DEVICESIZE.width*.03,
+    borderRadius: DEVICESIZE.width*.06,
     backgroundColor: COLORS.white,
-    marginBottom: 20,
+    marginBottom: DEVICESIZE.width*.03,
   },
   linearGradient: {
-    paddingHorizontal: 10,
-    borderTopLeftRadius: 40,
-    borderTopRightRadius: 40,
+    paddingHorizontal: DEVICESIZE.width*.01,
+    borderTopLeftRadius: DEVICESIZE.width*.06,
+    borderTopRightRadius: DEVICESIZE.width*.06,
   },
   top: {
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
-    paddingVertical: 10,
+    paddingVertical: DEVICESIZE.width*.03,
   },
   bottton: {
-    paddingLeft: 30,
+    paddingLeft: DEVICESIZE.width*.04,
   },
   name: {
-    fontSize: 14,
+    fontSize: DEVICESIZE.width*.038,
     letterSpacing: 0.1,
     color: COLORS.white,
   },
   text: {
-    paddingVertical: 13,
-    fontSize: 14,
-    paddingHorizontal: 10,
+    paddingVertical: DEVICESIZE.width*.035,
+    fontSize: DEVICESIZE.width*.035,
+    paddingHorizontal: DEVICESIZE.width*.06,
     // textAlign: 'center',
   },
 });

@@ -89,13 +89,13 @@ export const getTaskNow = (tokenId) => {
         AsyncStorage.setItem('tasks', str_tasks)
           .then(() => {})
           .catch((err) => {
-            console.log(err);
+            // console.log(err);
           });
         // RootNavigation.navigate('Home', {});
       })
       .catch((err) => {
         if (err.response) {
-          console.log(err.response.status);
+          // console.log(err.response.status);
         }
         dispatch(toggleLoading(false));
         dispatch(setError(err));

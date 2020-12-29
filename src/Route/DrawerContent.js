@@ -13,6 +13,7 @@ import * as RootNavigation from '../RootNavigation';
 // import PopUpOne from '../popUpModel/PopUpOne';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {NameLetter} from '../helper/NameLetter';
+import { DEVICESIZE } from '../helper/DEVICESIZE';
 const Drawer = createDrawerNavigator();
 
 const DrawerContent = (props) => {
@@ -25,8 +26,8 @@ const DrawerContent = (props) => {
             {!auth.pic ? (
               <View
                 style={{
-                  width: 100,
-                  height: 100,
+                  width: DEVICESIZE.width*.30,
+                  height: DEVICESIZE.width*.30,
                   borderRadius: 50,
                   backgroundColor: COLORS.lightcolor,
                   justifyContent: 'center',
@@ -47,11 +48,11 @@ const DrawerContent = (props) => {
                   uri: `${auth.pic}`,
                   // 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
                 }}
-                size={100}
+                size={DEVICESIZE.width*.03}
                 rounded
               />
             )}
-            <Text style={styles.title}>PP{auth.name}</Text>
+            <Text style={styles.title}>{auth.name}</Text>
             <Text style={styles.caption}>{auth.status}</Text>
           </View>
           <View
@@ -64,7 +65,7 @@ const DrawerContent = (props) => {
             <DrawerItem
               style={styles.bottomDrawerSection}
               label={({focused, color}) => (
-                <Text style={{color: '#000', fontWeight: 'bold', fontSize: 15}}>
+                <Text style={{color: '#000', fontWeight: 'bold', fontSize: DEVICESIZE.width*.035}}>
                   Want Some advice ?
                 </Text>
               )}
@@ -81,7 +82,7 @@ const DrawerContent = (props) => {
             <DrawerItem
               style={styles.bottomDrawerSection}
               label={({focused, color}) => (
-                <Text style={{color: '#000', fontWeight: 'bold', fontSize: 15}}>
+                <Text style={{color: '#000', fontWeight: 'bold', fontSize: DEVICESIZE.width*.035}}>
                   Sign out
                 </Text>
               )}
@@ -133,18 +134,18 @@ const styles = StyleSheet.create({
   title: {
     textTransform: 'capitalize',
     color: COLORS.white,
-    fontSize: 25,
+    fontSize: DEVICESIZE.width*.05,
     marginVertical: 10,
     fontWeight: 'bold',
   },
   caption: {
     color: COLORS.white,
-    fontSize: 13,
+    fontSize: DEVICESIZE.width*.03,
     textAlign: 'center',
-    lineHeight: 20,
+    lineHeight: DEVICESIZE.width*.06,
   },
   row: {
-    marginTop: 20,
+    marginTop: DEVICESIZE.width*.03,
     flexDirection: 'row',
     alignItems: 'center',
   },

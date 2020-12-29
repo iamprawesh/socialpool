@@ -142,10 +142,10 @@ const QuizQuestion = ({navigation, route}) => {
   return (
     <ScrollView ref={scroll}>
       {question.length == 0 && <Loading />}
-      <View style={{flex: 1, marginVertical: 10}}>
+      <View style={{flex: 1, marginVertical:  DEVICESIZE.width*.02}}>
         {result.show && (
           <View style={styles.quizresult}>
-            <Text style={{color: 'green', fontSize: 17}}>
+            <Text style={{color: 'green', fontSize:  DEVICESIZE.width*.04}}>
               Correct : {result.correct}
             </Text>
             <View
@@ -153,7 +153,7 @@ const QuizQuestion = ({navigation, route}) => {
                 width: DEVICESIZE.width,
                 borderColor: 'green',
               }}></View>
-            <Text style={{color: 'red', fontSize: 17}}>
+            <Text style={{color: 'red', fontSize:  DEVICESIZE.width*.04}}>
               Incorrect : {result.incorrect}
             </Text>
             <View
@@ -163,7 +163,7 @@ const QuizQuestion = ({navigation, route}) => {
                 // alignItems: 'center',
                 // justifyContent: 'center',
               }}></View>
-            <Text style={{color: 'blue', fontSize: 17}}>
+            <Text style={{color: 'blue', fontSize:  DEVICESIZE.width*.04}}>
               Unanswer : {result.unanswerd}
             </Text>
             <View
@@ -232,7 +232,7 @@ const QuizQuestion = ({navigation, route}) => {
                   borderRadius: 100,
                   alignSelf: 'baseline',
                 }}>
-                <Text style={{fontSize: 17}}>{index + 1}</Text>
+                <Text style={{fontSize:  DEVICESIZE.width*.04}}>{index + 1}</Text>
               </View>
               <Text style={styles.question}>
                 {converttoString(qn.question)}
@@ -299,7 +299,7 @@ const QuizQuestion = ({navigation, route}) => {
                       <Text
                         style={[
                           styles.choice,
-                          ans.length > 14 && {fontSize: 13},
+                          ans.length > 14 && {fontSize:  DEVICESIZE.width*.028},
                         ]}>
                         {ans}
                       </Text>
@@ -342,16 +342,16 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.white,
     width: DEVICESIZE.width * 0.9,
     marginLeft: DEVICESIZE.width * 0.05,
-    paddingHorizontal: 10,
-    paddingVertical: 20,
-    marginBottom: 20,
+    paddingHorizontal:  DEVICESIZE.width*.02,
+    paddingVertical:  DEVICESIZE.width*.04,
+    marginBottom:  DEVICESIZE.width*.04,
     borderRadius: 20,
   },
   quizresult: {
     // position: 'absolute',
     alignItems: 'center',
     justifyContent: 'space-around',
-    marginVertical: 10,
+    marginVertical:  DEVICESIZE.width*.03,
     flexDirection: 'row',
     flexWrap: 'wrap',
   },
@@ -361,33 +361,33 @@ const styles = StyleSheet.create({
   },
   question: {
     textAlign: 'center',
-    fontSize: 16,
-    lineHeight: 23,
-    marginHorizontal: 7,
+    fontSize:  DEVICESIZE.width*.04,
+    lineHeight:  DEVICESIZE.width*.05,
+    marginHorizontal:  DEVICESIZE.width*.03,
   },
   bottom: {
     borderTopWidth: 2,
     borderColor: COLORS.primarycolor,
   },
   answer: {
-    marginTop: 20,
+    marginTop:  DEVICESIZE.width*.03,
     flexDirection: 'row',
     flexWrap: 'wrap',
   },
   option: {
-    width: DEVICESIZE.width * 0.4,
-    paddingVertical: 10,
-    marginHorizontal: 5,
+    width: DEVICESIZE.width * 0.39,
+    paddingVertical:  DEVICESIZE.width*.02,
+    marginHorizontal:  DEVICESIZE.width*.01,
     backgroundColor: COLORS.grey,
-    marginBottom: 8,
+    marginBottom:  DEVICESIZE.width*.02,
     borderRadius: 20,
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
-    paddingHorizontal: 10,
+    paddingHorizontal:  DEVICESIZE.width*.02,
   },
   choice: {
-    fontSize: 16,
+    fontSize:  DEVICESIZE.width*.033,
     color: COLORS.white,
     textAlign: 'center',
   },

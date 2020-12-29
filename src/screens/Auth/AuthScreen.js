@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text, View, Image, Alert} from 'react-native';
+import {StyleSheet, Text, View, Image, ActivityIndicator} from 'react-native';
 import {COLORS} from '../../assets/colors';
 import MainButton from '../../components/MainButton';
 import Hr from 'react-native-hr-component';
@@ -22,21 +22,23 @@ import {
   statusCodes,
   GoogleSigninButton,
 } from '@react-native-community/google-signin';
+import { DEVICESIZE } from '../../helper/DEVICESIZE';
+import LottieView from 'lottie-react-native';
 
 const AuthScreen = ({navigation}) => {
   const dispatch = useDispatch();
-  const loading = useSelector((state) => state.loading);
+  const loading = useSelector((state) => state.auth.loading);
   const _fbAuth = () => {
     LoginManager.logInWithPermissions(['email', 'public_profile']).then(
       (result) => {
         if (result.isCancelled) {
-          console.log('Login cancelled');
+          // console.log('Login cancelled');
         } else {
           AccessToken.getCurrentAccessToken().then((data) => {
             const accessToken = data.accessToken;
             const responseInfoCallback = (error, result) => {
               if (error) {
-                console.log('Error fetching data=', error.toString());
+                // console.log('Error fetching data=', error.toString());
               } else {
                 let password = '123456123456asdfg123456';
                 let socialauth = true;
@@ -76,7 +78,6 @@ const AuthScreen = ({navigation}) => {
     )
       .then((response) => response.json())
       .then((json) => {
-        console.log(json);
       })
       .catch((err) => {
         alert('ERROR GETTING DATA FROM FACEBOOK');
@@ -85,7 +86,7 @@ const AuthScreen = ({navigation}) => {
 
   React.useEffect(() => {
     GoogleSignin.configure({
-      scopes: ['https://www.googleapis.com/auth/drive.readonly'], // what API you want to access on behalf of the user, default is email and profile
+      scopes: ['email'], // what API you want to access on behalf of the user, default is email and profile
       webClientId:
         '473624721309-tkgq9ql0qnu1rkspghkjp2v1gq8cad7s.apps.googleusercontent.com', // client ID of type WEB for your server (needed to verify user ID and offline access)
       offlineAccess: true, // if you want to access Google API on behalf of the user FROM YOUR SERVER
@@ -99,16 +100,22 @@ const AuthScreen = ({navigation}) => {
   const signIn = async () => {
     try {
       await GoogleSignin.hasPlayServices();
+      // dispatch()
       const userInfo = await GoogleSignin.signIn();
-
       let password = '123456123456asdfg123456';
+      
       let socialauth = true;
+      // const {name, photo,email,serverAuthCode} = await GoogleSignin.signIn();
+      let {name,photo,email} = userInfo.user
+      // console.log(name,email,photo,serverAuthCode)
+      // console.log(userInfo)
+      // console.log(loading)
       dispatch(
         loginUser(
-          userInfo.user.email,
+          email,
           password,
-          userInfo.user.name,
-          userInfo.user.photo,
+          name,
+          photo,
           socialauth,
           userInfo.serverAuthCode,
         ),
@@ -133,14 +140,14 @@ const AuthScreen = ({navigation}) => {
       }
 
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-        console.log('1');
+        // console.log('1');
         // user cancelled the login flow
       } else if (error.code === statusCodes.IN_PROGRESS) {
-        console.log('2');
+        // console.log('2');
 
         // operation (e.g. sign in) is in progress already
       } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-        console.log('3');
+        // console.log('3');
 
         // play services not available or outdated
       } else {
@@ -174,11 +181,6 @@ const AuthScreen = ({navigation}) => {
           />
           <View style={{marginRight: '5%'}} />
         </Animatable.View>
-        {loading && (
-          <View>
-            <Text>loading</Text>
-          </View>
-        )}
         <View style={styles.main}>
           <MainButton
             btntext="Log in"
@@ -201,7 +203,7 @@ const AuthScreen = ({navigation}) => {
             width={1}
             thickness={1}
             text="Or Connect With"
-            fontSize={14}
+            fontSize={DEVICESIZE.width*.035}
             hrPadding={19}
             textStyles={{
               fontWeight: 'bold',
@@ -210,7 +212,7 @@ const AuthScreen = ({navigation}) => {
           />
           <View style={styles.socialbtn}>
             <GoogleSigninButton
-              style={{width: 320, height: 55}}
+              style={{width: DEVICESIZE.width*.7, height: 55}}
               size={GoogleSigninButton.Size.Wide}
               color={GoogleSigninButton.Color.Dark}
               onPress={signIn}
@@ -227,6 +229,25 @@ const AuthScreen = ({navigation}) => {
           </View>
         </View>
       </View>
+       {loading && (
+        <View
+          style={{
+            flex: 1,
+            position: 'absolute',
+            height: DEVICESIZE.height,
+            width: DEVICESIZE.width,
+            padding: 100,
+            backgroundColor: 'rgba(0,0,0,0.2)',
+            // backgroundColor: COLORS.lightcolor,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <LottieView
+            source={require('../../assets/lottiefiles/userloading.json')}
+            autoPlay
+          />
+        </View>
+      )}
     </>
   );
 };

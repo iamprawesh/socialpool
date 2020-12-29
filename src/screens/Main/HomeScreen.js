@@ -23,6 +23,7 @@ import Loading from '../../components/Loading';
 import TaskItem from '../../components/TaskItem';
 import {Button, Overlay} from 'react-native-elements';
 import NeedInternet from '../../components/NeedInternet';
+import {DEVICESIZE} from '../../helper/DEVICESIZE';
 
 const HomeScreen = ({
   getTaskNow,
@@ -39,6 +40,8 @@ const HomeScreen = ({
   NetInfo.fetch().then((state) => {
     setNewtwork(`${state.isConnected}`);
   });
+
+  
 
   React.useEffect(() => {
     if (network) {
@@ -58,23 +61,30 @@ const HomeScreen = ({
   if (error) {
     return <NeedInternet />;
   }
-
+  const isHermes = () => !!global.HermesInternal;
   return (
     <View
       style={{
         flex: 1,
       }}>
+
+        <Button title="Jjjj"></Button>
+                {global.HermesInternal == null ? null : (
+            <View style={styles.engine}>
+              <Text style={styles.footer}>Engine: Hermes</Text>
+            </View>
+          )}
       <View style={{flex: 10, marginTop: 10}}>
         {error ? <Text>ddd</Text> : null}
-        <View style={{flex: 1}}>
           <FlatList
+          // getItemLayout={(data, index) => { return {length: 33, index, offset: 33 * index} }}
+          style={{flex:1}}
             data={tasks}
+            ref={(ref) => { this.flatListRef = ref; }}
             keyExtractor={(x) => x._id}
             renderItem={({item}) => <TaskItem item={item} />}
           />
-        </View>
       </View>
-
       <View style={styles.footer}>
         <FooterNaviagtion />
       </View>

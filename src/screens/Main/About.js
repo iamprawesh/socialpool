@@ -4,6 +4,7 @@ import {StyleSheet, Text, View, Image} from 'react-native';
 import {COLORS} from '../../assets/colors';
 import * as Animatable from 'react-native-animatable';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { DEVICESIZE } from '../../helper/DEVICESIZE';
 
 const slides = [
   {
@@ -67,7 +68,7 @@ const About = ({navigation}) => {
         <Icon
           name="chevron-forward-circle"
           color="rgba(255, 255, 255, .9)"
-          size={40}
+          size={DEVICESIZE.width*.1}
         />
       </View>
     );
@@ -75,7 +76,8 @@ const About = ({navigation}) => {
   const _renderDoneButton = () => {
     return (
       <View style={styles.buttonCircle}>
-        <Icon name="md-checkmark" color="rgba(255, 255, 255, .9)" size={40} />
+        <Icon name="md-checkmark" color="rgba(255, 255, 255, .9)"  size={DEVICESIZE.width*.1}
+ />
       </View>
     );
   };
@@ -85,7 +87,7 @@ const About = ({navigation}) => {
         <Icon
           name="md-play-forward-sharp"
           color="rgba(255, 255, 255, .9)"
-          size={40}
+          size={DEVICESIZE.width*.1}
         />
       </View>
     );
@@ -114,7 +116,7 @@ export default About;
 
 const styles = StyleSheet.create({
   image: {
-    height: 300,
+    height: DEVICESIZE.width*.6,
     // width: 200,
     width: null,
     // height: null,
@@ -124,8 +126,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   buttonCircle: {
-    width: 50,
-    height: 50,
+    width: DEVICESIZE.width*.17,
+    height: DEVICESIZE.width*.17,
     backgroundColor: 'rgba(0, 0, 0, .2)',
     borderRadius: 50,
     justifyContent: 'center',
@@ -138,15 +140,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   text: {
-    fontSize: 20,
+    fontSize:  DEVICESIZE.width*.04,
     textAlign: 'center',
-    lineHeight: 30,
+    lineHeight:  DEVICESIZE.width*.065,
     color: COLORS.lightcolor,
     fontFamily: 'monospace',
   },
   title: {
     marginTop: 20,
-    fontSize: 30,
+    fontSize:  DEVICESIZE.width*.09,
     color: COLORS.white,
     marginBottom: 10,
     fontWeight: 'bold',

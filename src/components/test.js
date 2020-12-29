@@ -26,7 +26,7 @@ const TaskItem = ({item}) => {
         .subtract(1, 'days')
         .calendar(),
     );
-    console.log(item.likes);
+    // console.log(item.likes);
     console.log('item.likes');
 
     setUserLikes(item.likes);
@@ -44,11 +44,11 @@ const TaskItem = ({item}) => {
         },
       },
     ).then((result) => {
-      console.log('=====================like');
+      // console.log('=====================like');
 
       // console.log('userlikes[0]');
       setUserLikes([...userlikes, auth.userId]);
-      console.log(result.likes);
+      // console.log(result.likes);
       const newdata = tasks.map((x) => {
         if (x._id == result.data._id) {
           return {...x, likes: [result.data.likes]};
@@ -56,8 +56,6 @@ const TaskItem = ({item}) => {
           return x;
         }
       });
-      console.log(userlikes);
-      console.log('userlikes');
 
       dispatch(fetchTask(newdata));
     });
@@ -76,33 +74,17 @@ const TaskItem = ({item}) => {
         },
       },
     ).then((result) => {
-      console.log('======================');
-      console.log(result);
-      console.log('======================');
 
       if (userlikes.length == 1 && userlikes[0].length == 0) {
         setUserLikes([]);
-        console.log(userlikes);
-        console.log('If ');
       } else {
         setUserLikes(
           userlikes.filter((like) => {
-            console.log(like);
             return like != auth.userId;
           }),
         );
-        console.log(userlikes);
-        console.log(typeof userlikes);
-
-        console.log('else');
       }
 
-      console.log(userlikes.length);
-      console.log('userlikes.length');
-      console.log(userlikes[0]);
-      console.log('userlikes[0]');
-
-      console.log(userlikes);
       const newdata = tasks.map((x) => {
         if (x._id == result.data._id) {
           return {...x, likes: [result.data.likes]};
@@ -110,18 +92,11 @@ const TaskItem = ({item}) => {
           return x;
         }
       });
-      console.log(newdata);
       dispatch(fetchTask(newdata));
     });
   };
-  console.log(item);
 
-  console.log(userlikes.length);
-  console.log(typeof userlikes);
 
-  console.log('userlikes');
-
-  // console.log(auth);
   return (
     <View style={styles.item} elevation={10}>
       <TouchableOpacity

@@ -33,7 +33,7 @@ const authReducer = (state = initialState, action) => {
     case LOGIN_REQUEST:
       return {
         ...state,
-        loading: true,
+        loading: action.payload,
       };
     case LOGIN_SUCCESS:
       return {

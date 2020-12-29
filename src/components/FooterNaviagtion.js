@@ -9,6 +9,7 @@ import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import {Icon as RCEIcon} from 'react-native-elements';
 import AppIntroSlider from 'react-native-app-intro-slider';
+import { DEVICESIZE } from '../helper/DEVICESIZE';
 
 const FooterNaviagtion = () => {
   const dispatch = useDispatch();
@@ -20,16 +21,12 @@ const FooterNaviagtion = () => {
         <TouchableOpacity onPress={() => navigation.navigate('Users')}>
           <View style={styles.view}>
             <View
-              style={{
-                padding: 10,
-                backgroundColor: COLORS.secondarycolor,
-                borderRadius: 50,
-              }}>
+              style={styles.iconCover}>
               <RCEIcon
                 name="users"
                 type="feather"
                 color={COLORS.white}
-                size={30}
+                size={DEVICESIZE.width*.07}
               />
             </View>
             <Text style={styles.text}>Users</Text>
@@ -44,16 +41,12 @@ const FooterNaviagtion = () => {
           }}>
           <View style={styles.view}>
             <View
-              style={{
-                padding: 10,
-                backgroundColor: COLORS.secondarycolor,
-                borderRadius: 50,
-              }}>
+              style={styles.iconCover}>
               <RCEIcon
                 type="feather"
                 name="edit"
                 color={COLORS.white}
-                size={30}
+                size={DEVICESIZE.width*.07}
               />
             </View>
 
@@ -84,7 +77,10 @@ const FooterNaviagtion = () => {
                 backgroundColor: COLORS.lightblack,
                 borderRadius: 50,
               }}>
-              <Icon name="home-sharp" color={COLORS.white} size={30} />
+              <Icon name="home-sharp" color={COLORS.white} 
+                size={DEVICESIZE.width*.07}
+              
+              />
             </View>
 
             {/* <Text style={styles.text}>Hello</Text> */}
@@ -98,15 +94,11 @@ const FooterNaviagtion = () => {
           }}>
           <View style={styles.view}>
             <View
-              style={{
-                padding: 10,
-                backgroundColor: COLORS.secondarycolor,
-                borderRadius: 50,
-              }}>
+              style={styles.iconCover}>
               <Image
                 style={{
-                  height: 35,
-                  width: 35,
+                  height: DEVICESIZE.width*.09,
+                  width: DEVICESIZE.width*.09,
                 }}
                 source={require('../assets/images/quiz.png')}
               />
@@ -124,12 +116,10 @@ const FooterNaviagtion = () => {
           }}>
           <View style={styles.view}>
             <View
-              style={{
-                padding: 10,
-                backgroundColor: COLORS.secondarycolor,
-                borderRadius: 50,
-              }}>
-              <Icon name="information" color={COLORS.white} size={30} />
+              style={styles.iconCover}>
+              <Icon name="information" color={COLORS.white} 
+                size={DEVICESIZE.width*.07}
+              />
             </View>
 
             <Text style={styles.text}>About</Text>
@@ -144,13 +134,18 @@ export default FooterNaviagtion;
 
 const styles = StyleSheet.create({
   view: {
-    padding: 10,
+    padding: DEVICESIZE.width*.04,
     flexDirection: 'column',
+  },
+  iconCover:{
+    padding: DEVICESIZE.width*.025,
+    backgroundColor: COLORS.secondarycolor,
+    borderRadius: DEVICESIZE.width*.1,
   },
   text: {
     // marginTop: -4,
     color: COLORS.white,
-    fontSize: 13,
+    fontSize: DEVICESIZE.width*.033,
     letterSpacing: 1,
     marginTop: 3,
     fontWeight: 'bold',

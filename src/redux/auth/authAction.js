@@ -15,6 +15,7 @@ import {
   UPDATE_PIC,
 } from './authTypes';
 import Snackbar from 'react-native-snackbar';
+import LottieView from 'lottie-react-native';
 
 import KEY from '../../config/keys';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -122,34 +123,57 @@ export const loginUser = (
   token = '',
 ) => {
   return (dispatch) => {
+    console.log(email,password)
     dispatch(loginRequest(true));
-    let url = `${KEY.APIURL}/api/user/login`;
-    console.log(url);
-    axios
-      .post(url, {
+    let url = `${KEY.APIURL}/api/user/login`
+    // console.log(url);
+    // axios.post(url,{
+    //   name,email,password,socialauth,token
+    // }).then((res)=>{
+    //   console.log(res.data);
+    // dispatch(loginRequest(false));
+    // }).catch((error)=>{
+    //   console.log(error.response.data.message)
+    //   if (error.response) {
+    //       dispatch(loginFailed(error.response.data.message));
+    //     }
+    //   else if(error['message']=='Network Error'){
+    //     alert("Check the internet connection");
+    //   }
+    // dispatch(loginRequest(false));
+    // })
+    axios.post(url, {
         name,
         email,
         password,
-        pic,
         socialauth,
-        token,
-      })
-      .then((res) => {
-        let user_data = JSON.stringify(res.data);F
+        token
+      }).then((res) => {
+        // console.log(res)
+        let user_data = JSON.stringify(res.data);
         AsyncStorage.setItem('userInfo', user_data)
           .then((x) => {
             dispatch(loginSuccess(res.data));
           })
-          .catch((err) => {});
+          .catch((err) => {
+            // console.log('err');
+            // console.log(err);
+          });
       })
       .catch((error) => {
-        console.log(error);
+        console.log('error.response.data.message');
+        // console.log(error.response);
         if (error.response.data) {
           dispatch(loginFailed(error.response.data.message));
         }
-        if (error.response.status == 401) {
-          dispatch(loginFailed(error.response.data.message));
-        }
+        else if(error['message']=='Network Error'){
+          alert("Check the internet connection");
+          dispatch(loginRequest(false));
+
+      }
+        // if (error.response.status == 401) {
+          // dispatch(loginFailed(error.response.data.message));
+        // }
       });
   };
 };
@@ -165,8 +189,8 @@ export const getallUsers = (userId) => {
         dispatch(updateStatus(ownUser[0].status));
       })
       .catch((err) => {
-        console.log(err);
-        console.log('error');
+        // console.log(err);
+        // console.log('error');
       });
   };
 };
@@ -189,7 +213,7 @@ export const updatestatus = (id, status, tokenId) => {
       )
       .then((response) => {
         console.log('Update status');
-        console.log(response);
+        // console.log(response);
         if (response.status == 200) {
           dispatch(updateStatus(response.data.result));
           Snackbar.show({
@@ -221,8 +245,8 @@ export const updatestatus = (id, status, tokenId) => {
         }
       })
       .catch((err) => {
-        console.log('error');
-        console.log(err.response.data);
+        // console.log('error');
+        // console.log(err.response.data);
       });
   };
 };
@@ -247,30 +271,36 @@ export const signoutUser = () => {
         AsyncStorage.getAllKeys()
           .then((x) => {})
           .catch((err) => {
-            console.log(err);
+            // console.log(err);
           });
       })
       .catch((err) => {});
   };
 };
 
+export const loadingRequest = (val)=>{
+  return(dispatch)=>{
+    dispatch(signupRequest(val));
+  }
+}
+
 export const SignupUser = (name, email, password) => {
   return (dispatch) => {
     dispatch(signupRequest(true));
-    console.log(email, password, password);
+    console.log(email, name, password);
     let url = `${KEY.APIURL}/api/user/signup`;
-    axios
-      .post(url, {
+    // console.log(url);
+    axios.post(url, {
         name,
         email,
-        password,
-      })
-      .then((response) => {
+        password
+      }).then((response) => {
         dispatch(signupSuccess());
         alert('Sign up Success Login Now!');
         RootNavigation.navigate('LoginS', {});
-      })
-      .catch((error) => {
+      }).catch((error) => {
+        // console.log(error)
+        // console.log(error.response.data.message)
         dispatch(signupFailed(error.response.data.message));
       });
   };

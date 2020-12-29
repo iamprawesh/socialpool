@@ -27,8 +27,8 @@ import LinearGradient from 'react-native-linear-gradient';
 import Spacer from '../../helper/Spacer';
 
 import UpdateStatus from '../../components/UpdateStatus';
+import { formatDate } from '../../helper/Formatdate';
 // var ImagePicker = NativeModules.ImageCropPicker;
-
 const UserProfile = ({route, navigation}) => {
   const dispatch = useDispatch();
   const [user, setUser] = React.useState([]);
@@ -117,11 +117,11 @@ const UserProfile = ({route, navigation}) => {
     ImagePicker.showImagePicker(options, (response) => {
       console.log('Response = ', response);
       if (response.didCancel) {
-        console.log('User cancelled image picker');
+        // console.log('User cancelled image picker');
       } else if (response.error) {
-        console.log('ImagePicker Error: ', response.error);
+        // console.log('ImagePicker Error: ', response.error);
       } else if (response.customButton) {
-        console.log('User tapped custom button: ', response.customButton);
+        // console.log('User tapped custom button: ', response.customButton);
       } else {
         // console.log(response);
         const uri = response.uri;
@@ -132,7 +132,7 @@ const UserProfile = ({route, navigation}) => {
           type,
           name,
         };
-        console.log('Image ', source);
+        // console.log('Image ', source);
 
         setImage(source.uri);
         cloudinaryUpload(source);
@@ -185,6 +185,9 @@ const UserProfile = ({route, navigation}) => {
         ')',
     );
   };
+  if(!user.name){
+    return <Text></Text>
+  }
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -215,7 +218,7 @@ const UserProfile = ({route, navigation}) => {
                       fontWeight: 'bold',
                       color: COLORS.white,
                     }}>
-                    {NameLetter(auth.name)}
+                    {NameLetter(user.name)}
                   </Text>
                 </View>
               )}
@@ -236,7 +239,7 @@ const UserProfile = ({route, navigation}) => {
               <Spacer height={9} />
               <Text style={[styles.name, {fontSize: 20}]}>{user.name}</Text>
               <Text style={styles.name}>Status : {auth.status}</Text>
-              <Text style={styles.name}>Joined at : {auth.name}</Text>
+              {/* <Text style={styles.name}>Joined at : {user.createdAt}</Text> */}
 
               <TouchableOpacity
                 activeOpacity={0.8}
@@ -259,7 +262,6 @@ const UserProfile = ({route, navigation}) => {
                 onSave={() => {
                   dispatch(updatestatus(auth.userId, status, tokenId));
 
-                  console.log('Save');
                   setShowUpdate(!showupdate);
                 }}
                 onCancel={() => {

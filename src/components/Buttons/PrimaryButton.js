@@ -24,7 +24,7 @@ export default PrimaryButton;
 
 const styles = StyleSheet.create({
   btn: {
-    paddingHorizontal: 20,
+    paddingHorizontal:  DEVICESIZE.width*.04,
     paddingVertical: 15,
     backgroundColor: COLORS.primarycolor,
     borderRadius: 20,
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   text: {
-    fontSize: 20,
+    fontSize:  DEVICESIZE.width*.04,
     color: COLORS.white,
     textAlign: 'center',
   },

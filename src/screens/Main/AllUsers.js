@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text, View, Image} from 'react-native';
+import {StyleSheet, Text, View, Image,ScrollView } from 'react-native';
 import {ListItem} from 'react-native-elements';
 // import LinearGradient from 'react-native-linear-gradient'; // Only if no expo
 // import TouchableScale from 'react-native-touchable-scale'; // https://github.com/kohver/react-native-touchable-scale
@@ -11,7 +11,6 @@ const AllUsers = ({navigation}) => {
   const [randomColor, setRandomColor] = React.useState('');
   const {users} = useSelector((state) => state.auth);
   // const random = Math.floor(Math.random() * ColorCode.length);
-
   const ColorCode = (i) => {
     'rgb(' +
       Math.floor(Math.random() * 256) +
@@ -21,20 +20,6 @@ const AllUsers = ({navigation}) => {
       Math.floor(Math.random() * 256) +
       ')';
   };
-  const list = [
-    {
-      name: 'Amy Farha',
-      avatar_url:
-        'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-      subtitle: 'Vice President',
-    },
-    {
-      name: 'Chris Jackson',
-      avatar_url:
-        'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
-      subtitle: 'Vice Chairman',
-    },
-  ];
   const getRandomColor = () => {
     return setRandomColor(
       'rgb(' +
@@ -46,8 +31,11 @@ const AllUsers = ({navigation}) => {
         ')',
     );
   };
+  console.log(users)
   return (
     <View>
+      <ScrollView>
+
       {users.map((item, i) => (
         <ListItem
           key={i}
@@ -80,24 +68,33 @@ const AllUsers = ({navigation}) => {
                   }}
                 />
               ) : (
-                <View
+                <Image
                   style={{
-                    width: 100,
-                    height: 100,
+                    height: 70,
+                    width: 70,
                     borderRadius: 50,
-                    backgroundColor: `${ColorCode(i)}`,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}>
-                  <Text
-                    style={{
-                      fontSize: 55,
-                      fontWeight: 'bold',
-                      color: COLORS.white,
-                    }}>
-                    {NameLetter(item.name)}
-                  </Text>
-                </View>
+                  }}
+                  source={{
+                    uri: 'https://res.cloudinary.com/dxg62sdjk/image/upload/v1590226578/default-user-image_exjw7k.png',
+                  }}
+                />
+                //   style={{
+                //     width: 100,
+                //     height: 100,
+                //     borderRadius: 50,
+                //     backgroundColor: `${ColorCode(i)}`,
+                //     justifyContent: 'center',
+                //     alignItems: 'center',
+                //   }}>
+                //   <Text
+                //     style={{
+                //       fontSize: 55,
+                //       fontWeight: 'bold',
+                //       color: COLORS.white,
+                //     }}>
+                //     {NameLetter(item.name)}
+                //   </Text>
+                // </View>
               )}
             </View>
           }
@@ -114,6 +111,8 @@ const AllUsers = ({navigation}) => {
           // pad={29}
         />
       ))}
+      </ScrollView>
+
     </View>
   );
 };
